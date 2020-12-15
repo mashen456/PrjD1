@@ -9,9 +9,9 @@ namespace PrjD1FW.Controllers
     public class UserController : Controller
     {
         // GET: User
-        public string Index()
+        public ActionResult Index()
         {
-            return "working";
+            return View("Login");
         }
     }
 }
