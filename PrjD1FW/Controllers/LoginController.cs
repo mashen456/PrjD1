@@ -8,17 +8,17 @@ using System.Web.Mvc;
 
 namespace PrjD1FW.Controllers
 {
-    public class UserController : Controller
+    public class LoginController : Controller
     {
-        // GET: User
-        public ActionResult login()
+        // GET: Login
+        public ActionResult Index()
         {
             return View("Login");
         }
 
 
 
-        public string s(user user)
+        public string Login(user user)
         {
             SecurityService securityService = new SecurityService();
             Boolean authState = securityService.Auth(user);
