@@ -23,7 +23,8 @@
                 <ul class="nav navbar-nav">
                     <li>@Html.ActionLink("Startseite", "Index", "Home")</li>
                     <li>@Html.ActionLink("Informationen", "About", "Home")</li>
-                    <li>@Html.ActionLink("Kontakt", "Contact", "Home")</li>
+                    <li>@Html.ActionLink("Kontakt", "Contact", "Home", "User")</li>
+                    @Html.ActionLink("User", "Index", "Login")
                 </ul>
             </div>
         </div>

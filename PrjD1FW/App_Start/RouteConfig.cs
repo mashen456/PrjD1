@@ -16,7 +16,7 @@ namespace PrjD1FW
             routes.MapRoute(
                 name: "Login",
                 url: "{Login}",
-                defaults: new { controller = "User", action = "Index", id = UrlParameter.Optional }
+                defaults: new { controller = "User", action = "Login", id = UrlParameter.Optional }
             );
 
             routes.MapRoute(

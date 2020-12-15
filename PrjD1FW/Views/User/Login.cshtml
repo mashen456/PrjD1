@@ -1,16 +1,18 @@
 ﻿@model PrjD1FW.Models.user
 
 @{
-    ViewBag.Title = "Login";
+    ViewBag.Title = "Userxxy";
 }
 
-<h2>Login</h2>
+<h2>User</h2>
 
 
-@using (Html.BeginForm()) 
+@*@using (Html.BeginForm())*@
+
+@using (Html.BeginForm("s", "User", FormMethod.Post))
 {
     @Html.AntiForgeryToken()
-    
+
     <div class="form-horizontal">
         <h4>user</h4>
         <hr />
