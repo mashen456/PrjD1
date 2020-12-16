@@ -147,6 +147,10 @@
     <Content Include="Content\Home2.png" />
     <Content Include="Content\Kalender.png" />
     <Content Include="Content\Kalender2.png" />
+    <Content Include="DatenbankUser.mdf" />
+    <Content Include="DatenbankUser_log.ldf">
+      <DependentUpon>DatenbankUser.mdf</DependentUpon>
+    </Content>
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
