@@ -1,0 +1,2 @@
+cd /d "C:\Users\wuat\Source\Repos\mashen456\PrjD1\PrjD1FW" &msbuild "PrjD1FW.csproj" /t:sdvViewer /p:configuration="Debug" /p:platform="Any CPU" /p:SolutionDir="C:\Users\wuat\source\repos\mashen456\PrjD1\PrjD1FW" 
+exit %errorlevel% 
