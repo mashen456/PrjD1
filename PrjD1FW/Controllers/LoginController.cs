@@ -24,7 +24,7 @@ namespace PrjD1FW.Controllers
             Boolean authState = securityService.Auth(user);
             if (authState)
             {
-                return View("Login", user);
+                return View("userPannel", user);
             }
             return View("Login", user);
         }

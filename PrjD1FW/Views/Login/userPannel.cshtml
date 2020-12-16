@@ -1,0 +1,28 @@
+﻿@model PrjD1FW.Models.user
+
+@{
+    ViewBag.Title = "userPannel";
+}
+
+<h2>userPannel</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+@Html.AntiForgeryToken()
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(user => user.Username)
+        </th>
+        <th>
+            @Html.DisplayNameFor(user => user.Password)
+        </th>
+        <th>
+            @Html.DisplayNameFor(user => user.ConfirmPassword)
+        </th>
+        <th></th>
+    </tr>
+
+</table>

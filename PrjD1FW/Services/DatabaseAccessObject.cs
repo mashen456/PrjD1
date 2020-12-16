@@ -11,7 +11,10 @@ namespace PrjD1FW.Services
 {
     public class DatabaseAccessObject
     {
-        string connectionString = @"Data Source = (LocalDB)\MSSQLLocalDB; AttachDbFilename = C:\Users\hp - laptop\source\repos\Prj_D1\PrjD1\PrjD1FW\App_Data\DatenbankUser.mdf; Integrated Security = True";
+        string connectionString = @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\Users\hp-laptop\source\repos\Prj_D1\PrjD1\PrjD1FW\App_Data\DatenbankUser.mdf;Integrated Security=True";
+
+
+
 
         internal bool authUser(user user)
         {
@@ -32,16 +35,30 @@ namespace PrjD1FW.Services
                 {
                     connection.Open();
                     SqlDataReader reader = command.ExecuteReader();
-                    connection.Close();
+                    
 
                     if (reader.HasRows)
                     {
+                        reader.Close();
+                        //command.Dispose();
+                        queryString = "UPDATE dbo.Users SET lastLogin = GETDATE() where username = @Username";
+                        command = new SqlCommand(queryString, connection);
+                        command.Parameters.Add("@Username", System.Data.SqlDbType.VarChar, 50).Value = user.Username;
+                        command.ExecuteNonQuery();
+
+
+                        queryString = "UPDATE dbo.Users SET successfulLogins = successfulLogins + 1 WHERE username = @Uname";
+                        command.Parameters.Add("@Uname", System.Data.SqlDbType.VarChar, 50).Value = user.Username;
+                        command.ExecuteNonQuery();
+
                         success = true;
                     }
                     else
                     {
                         success = false;
+
                     }
+                    connection.Close();
 
                 }
                 catch (Exception e)
