@@ -12,7 +12,7 @@ namespace PrjD1FW.Services
 
         public bool Auth(user user)
         {
-            return dbObject.authUser(user);
+            return dbObject.AuthUser(user);
         }
     }
 }

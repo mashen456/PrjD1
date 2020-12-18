@@ -1,0 +1,10 @@
+{
+  "dependencies": {
+    "mssql1": {
+      "resourceId": "/subscriptions/[parameters('subscriptionId')]/resourceGroups/[parameters('resourceGroup')]/providers/Microsoft.Sql/servers/danielprj1/databases/userdb",
+      "type": "mssql.azure",
+      "connectionId": "userdb",
+      "secretStore": "AzureAppSettings"
+    }
+  }
+}
