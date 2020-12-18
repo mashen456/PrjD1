@@ -18,15 +18,19 @@ namespace PrjD1FW.Controllers
 
 
 
-        public string Login(user user)
+        public ActionResult Login(user user)
         {
-            SecurityService securityService = new SecurityService();
+
+                SecurityService securityService = new SecurityService();
             Boolean authState = securityService.Auth(user);
             if (authState)
             {
-                return ("login success");
+                    ViewData["Success"] = "Login Success";
+                    return View("userPannel");
             }
-            return ("login failed");
+        
+            ViewData["Error"] = "Username / Password combination not found!";
+            return View("login", user);
         }
     }
 }

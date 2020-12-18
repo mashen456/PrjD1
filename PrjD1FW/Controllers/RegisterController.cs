@@ -31,7 +31,7 @@ namespace PrjD1FW.Controllers
                 }
                 else
                 {
-                    ViewData["Error"] = "LUL Error message text.";
+                    ViewData["Error"] = "Username already exists!";
                     return View("Register");
                 }
             }
