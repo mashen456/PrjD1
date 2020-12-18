@@ -29,3 +29,6 @@
 |NULL| default / new registered user |
 |1-8| user states
 |99|Admin / root
+
+ # Credits
+ - [Henk Mollema for his CryptoHelper function.](https://github.com/henkmollema/CryptoHelper)
