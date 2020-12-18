@@ -17,7 +17,7 @@ namespace PrjD1FW.Services
         string connectionString = @"Data Source=tcp:danielprj1.database.windows.net,1433;Initial Catalog=userdb;User Id=danielWebApp@danielprj1;Password=E@c%%xP#TiE8";
 
 
-        
+
         internal bool AuthUser(user user)
         {
             bool success = false;
@@ -39,7 +39,7 @@ namespace PrjD1FW.Services
                 {
                     connection.Open();
                     SqlDataReader reader = command.ExecuteReader();
-                    
+
 
                     if (reader.HasRows)
                     {
@@ -51,7 +51,7 @@ namespace PrjD1FW.Services
                         IterateFailedLoginCount(user);
                     }
 
-                    
+
 
                 }
                 catch (Exception e)
@@ -61,13 +61,21 @@ namespace PrjD1FW.Services
                 }
                 connection.Close();
             }
-            
+
             return success;
         }
+
+
+
 
         internal bool RegisterUser(user user)
         {
             bool success = false;
+
+            if (!CheckUsername(user))
+            {
+                return success;
+            }
             string queryString = "INSERT INTO [dbo].[Table] (username, password) VALUES (@Username,@Password)";
 
             using (SqlConnection connection = new SqlConnection(connectionString))
@@ -75,7 +83,7 @@ namespace PrjD1FW.Services
                 SqlCommand command = new SqlCommand(queryString, connection);
 
                 command.Parameters.Add("@Username", System.Data.SqlDbType.VarChar, 50).Value = user.Username;
-                command.Parameters.Add("@Password", System.Data.SqlDbType.VarChar, 50).Value = HashPassword(user.Password);
+                command.Parameters.Add("@Password", System.Data.SqlDbType.VarChar, 50).Value = user.Password;
 
                 try
                 {
@@ -90,7 +98,7 @@ namespace PrjD1FW.Services
                 connection.Close();
             }
 
-            
+
             return success;
 
         }
@@ -172,7 +180,53 @@ namespace PrjD1FW.Services
             return Crypto.VerifyHashedPassword(hash, password);
         }
 
-}
+        public bool CheckUsername(user user)
+        {
+            bool success = false;
+            log.Info("checking username for user: " + user.Username);
+
+
+
+            string queryString = "SELECT * FROM [dbo].[Table] WHERE username = @Username";
+
+
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                SqlCommand command = new SqlCommand(queryString, connection);
+
+                command.Parameters.Add("@Username", System.Data.SqlDbType.VarChar, 50).Value = user.Username;
+
+                try
+                {
+                    connection.Open();
+                    SqlDataReader reader = command.ExecuteReader();
+
+
+                    if (reader.HasRows)
+                    {
+                        success = false;
+                    }
+                    else
+                    {
+                        success = true;
+                    }
+
+
+
+                }
+                catch (Exception e)
+                {
+                    log.Error(e.Message);
+                    success = false;
+                }
+                connection.Close();
+                return success;
+            }
+
+        }
+
+
+    }
 }
 
 

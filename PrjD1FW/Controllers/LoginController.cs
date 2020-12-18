@@ -11,9 +11,9 @@ namespace PrjD1FW.Controllers
     public class LoginController : Controller
     {
         // GET: Login
-        public ActionResult Index(user user)
+        public ActionResult Index()
         {
-            return View("Login", user);
+            return View("Login");
         }
 
 

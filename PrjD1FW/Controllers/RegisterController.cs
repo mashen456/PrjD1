@@ -8,25 +8,34 @@ using System.Web.Mvc;
 
 namespace PrjD1FW.Controllers
 {
+
     public class RegisterController : Controller
     {
         // GET: Register
-        public ActionResult Index(user user)
+        public ActionResult Index()
         {
-            return View("Register", user);
+            return View("Register");
         }
 
 
 
         public ActionResult Register(user user)
         {
-            SecurityService securityService = new SecurityService();
-            Boolean authState = securityService.RegisterUser(user);
-            if (authState)
+            if (ModelState.IsValid)
             {
-                return View("Register", user);
+                SecurityService securityService = new SecurityService();
+                Boolean authState = securityService.RegisterUser(user);
+                if (authState)
+                {
+                    return RedirectToAction("Index", "Login");
+                }
+                else
+                {
+                    ViewData["Error"] = "LUL Error message text.";
+                    return View("Register");
+                }
             }
-            return View("Register", user);
+            return View("Register",user);
         }
     }
 }
