@@ -11,9 +11,9 @@ namespace PrjD1FW.Controllers
     public class RegisterController : Controller
     {
         // GET: Register
-        public ActionResult Index()
+        public ActionResult Index(user user)
         {
-            return View("Register");
+            return View("Register", user);
         }
 
 
@@ -21,7 +21,7 @@ namespace PrjD1FW.Controllers
         public ActionResult Register(user user)
         {
             SecurityService securityService = new SecurityService();
-            Boolean authState = securityService.Auth(user);
+            Boolean authState = securityService.RegisterUser(user);
             if (authState)
             {
                 return View("Register", user);

@@ -14,5 +14,9 @@ namespace PrjD1FW.Services
         {
             return dbObject.AuthUser(user);
         }
+        public bool RegisterUser(user user)
+        {
+            return dbObject.RegisterUser(user);
+        }
     }
 }
