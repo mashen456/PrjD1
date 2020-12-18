@@ -45,8 +45,11 @@ namespace PrjD1FW.Services
 
                     if (reader.HasRows)
                     {
-                        IterateLoginCount(user);
-                        success = true;
+                        success = IterateLoginCount(user);
+                    }
+                    else
+                    {
+                        IterateFailedLoginCount(user);
                     }
 
                     connection.Close();
@@ -62,9 +65,11 @@ namespace PrjD1FW.Services
 
 
 
+        //Helper Functions
 
         internal bool IterateLoginCount(user user)
         {
+            bool success = false;
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
                 connection.Open();
@@ -79,18 +84,47 @@ namespace PrjD1FW.Services
 
                         command.CommandText = "UPDATE[dbo].[Table] SET successfulLogins = successfulLogins + 1 WHERE username = @Username";
                         command.ExecuteNonQuery();
+                        success = true;
                     }
                     catch (Exception e)
                     {
                         Console.WriteLine(e.Message);
+                        success = false;
                     }
 
 
                 }
-                return true;
+                return success;
             }
         }
 
+        internal bool IterateFailedLoginCount(user user)
+        {
+            bool success = false;
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                connection.Open();
+
+                using (var command = connection.CreateCommand())
+                {
+                    try
+                    {
+                        command.CommandText = "UPDATE[dbo].[Table] SET failedLogins = failedLogins + 1 WHERE username = @Username";
+                        command.Parameters.Add("@Username", System.Data.SqlDbType.VarChar, 50).Value = user.Username;
+                        command.ExecuteNonQuery();
+                        success = true;
+                    }
+                    catch (Exception e)
+                    {
+                        Console.WriteLine(e.Message);
+                        success = false;
+                    }
+
+
+                }
+                return success;
+            }
+        }
 
     }
 }
