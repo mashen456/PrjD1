@@ -13,6 +13,7 @@ namespace PrjD1FW.Services
 {
     public class DatabaseAccessObject
     {
+        logger log = new logger();
         string connectionString = @"Data Source=tcp:danielprj1.database.windows.net,1433;Initial Catalog=userdb;User Id=danielWebApp@danielprj1;Password=E@c%%xP#TiE8";
 
 
@@ -28,11 +29,11 @@ namespace PrjD1FW.Services
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
 
-
+                log.Info("auth: " + user.Username);
                 SqlCommand command = new SqlCommand(queryString, connection);
 
                 command.Parameters.Add("@Username", System.Data.SqlDbType.VarChar, 50).Value = user.Username;
-                command.Parameters.Add("@Password", System.Data.SqlDbType.VarChar, 50).Value = HashPassword(user.Password);
+                command.Parameters.Add("@Password", System.Data.SqlDbType.VarChar, 50).Value = user.Password;
 
                 try
                 {
@@ -56,7 +57,7 @@ namespace PrjD1FW.Services
                 catch (Exception e)
                 {
                     //return user not found in DB
-                    Console.WriteLine(e.Message);
+                    log.Error(e.Message);
                 }
                 connection.Close();
             }

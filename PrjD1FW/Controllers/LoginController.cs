@@ -18,15 +18,15 @@ namespace PrjD1FW.Controllers
 
 
 
-        public ActionResult Login(user user)
+        public string Login(user user)
         {
             SecurityService securityService = new SecurityService();
             Boolean authState = securityService.Auth(user);
             if (authState)
             {
-                return View("userPannel", user);
+                return ("login success");
             }
-            return View("Login", user);
+            return ("login failed");
         }
     }
 }
