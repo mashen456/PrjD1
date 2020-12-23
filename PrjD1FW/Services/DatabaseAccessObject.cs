@@ -22,7 +22,7 @@ namespace PrjD1FW.Services
         {
             bool success = false;
 
-            string queryString = "SELECT * FROM [dbo].[Table] WHERE username = @Username AND password = @Password";
+            string queryString = "SELECT * FROM [dbo].[users] WHERE username = @Username AND password = @Password";
 
 
 
@@ -76,7 +76,7 @@ namespace PrjD1FW.Services
             {
                 return success;
             }
-            string queryString = "INSERT INTO [dbo].[Table] (username, password) VALUES (@Username,@Password)";
+            string queryString = "INSERT INTO [dbo].[users] (username, password) VALUES (@Username,@Password)";
 
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
@@ -118,11 +118,11 @@ namespace PrjD1FW.Services
                 {
                     try
                     {
-                        command.CommandText = "UPDATE [dbo].[Table] SET lastLogin = GETDATE() where username = @Username";
+                        command.CommandText = "UPDATE [dbo].[users] SET lastLogin = GETDATE() where username = @Username";
                         command.Parameters.Add("@Username", System.Data.SqlDbType.VarChar, 50).Value = user.Username;
                         command.ExecuteNonQuery();
 
-                        command.CommandText = "UPDATE[dbo].[Table] SET successfulLogins = successfulLogins + 1 WHERE username = @Username";
+                        command.CommandText = "UPDATE[dbo].[users] SET successfulLogins = successfulLogins + 1 WHERE username = @Username";
                         command.ExecuteNonQuery();
                         success = true;
                     }
@@ -149,7 +149,7 @@ namespace PrjD1FW.Services
                 {
                     try
                     {
-                        command.CommandText = "UPDATE[dbo].[Table] SET failedLogins = failedLogins + 1 WHERE username = @Username";
+                        command.CommandText = "UPDATE[dbo].[users] SET failedLogins = failedLogins + 1 WHERE username = @Username";
                         command.Parameters.Add("@Username", System.Data.SqlDbType.VarChar, 50).Value = user.Username;
                         command.ExecuteNonQuery();
                         success = true;
@@ -187,7 +187,7 @@ namespace PrjD1FW.Services
 
 
 
-            string queryString = "SELECT * FROM [dbo].[Table] WHERE username = @Username";
+            string queryString = "SELECT * FROM [dbo].[users] WHERE username = @Username";
 
 
             using (SqlConnection connection = new SqlConnection(connectionString))

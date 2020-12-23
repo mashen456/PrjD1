@@ -10,6 +10,9 @@
     @Html.ActionLink("Create New", "Create")
 </p>
 @Html.AntiForgeryToken()
+<div class="text-danger">
+    <p>@ViewData["Success"].ToString()</p>
+</div>
 
 <table class="table">
     <tr>
@@ -21,8 +24,10 @@
         </th>
         <th>
             @Html.DisplayNameFor(user => user.ConfirmPassword)
+            
         </th>
         <th></th>
     </tr>
+
 
 </table>
