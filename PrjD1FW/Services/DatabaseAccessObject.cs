@@ -17,6 +17,51 @@ namespace PrjD1FW.Services
         logger log = new logger();
         string connectionString = @"Data Source=tcp:danielprj1.database.windows.net,1433;Initial Catalog=userdb;User Id=danielWebApp@danielprj1;Password=E@c%%xP#TiE8";
 
+        internal ReturnInfo RegisterCompany(company company)
+        {
+            ReturnInfo returnInfo = new ReturnInfo();
+            returnInfo.success = false;
+
+            if (!CheckCompanyName(company))
+            {
+                returnInfo.errorMessage = "Company already exists";
+                return returnInfo;
+            }
+            string queryString = "INSERT INTO [dbo].[company] (Name, Street, zip, city, tele, fax, FK_creator) VALUES (@Name,@Street,@zip,@city,@tele,@fax,@FK_creator)";
+
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                SqlCommand command = new SqlCommand(queryString, connection);
+
+                command.Parameters.Add("@Name", System.Data.SqlDbType.VarChar, 50).Value = company.Name;
+                command.Parameters.Add("@Street", System.Data.SqlDbType.VarChar, 50).Value = company.Street;
+                command.Parameters.Add("@zip", System.Data.SqlDbType.VarChar, 8).Value = company.zip;
+                command.Parameters.Add("@city", System.Data.SqlDbType.VarChar, 50).Value = company.city;
+                command.Parameters.Add("@tele", System.Data.SqlDbType.VarChar, 10).Value = company.tele;
+                command.Parameters.Add("@fax", System.Data.SqlDbType.VarChar, 10).Value = company.fax;
+                command.Parameters.Add("@FK_creator", System.Data.SqlDbType.Int, 50).Value = company.FK_creator;
+
+                try
+                {
+                    connection.Open();
+                    command.ExecuteNonQuery();
+                    returnInfo.success = true;
+                }
+                catch (Exception e)
+                {
+                    returnInfo.errorMessage = "error inserting new company to db";
+                    log.Error("error inserting new company to db");
+                    Console.WriteLine(e.Message);
+                }
+                connection.Close();
+            }
+
+
+            return returnInfo;
+
+        }
+
+
         internal AuthedUser AuthUser(user user)
         {
             AuthedUser authedUser = new AuthedUser();
@@ -225,10 +270,50 @@ namespace PrjD1FW.Services
 
         }
 
+        public bool CheckCompanyName(company company)
+        {
+            bool success = false;
+            log.Info("checking CheckCompanyName for user: " + company.FK_creator);
 
 
 
+            string queryString = "SELECT * FROM [dbo].[company] WHERE Name = @Name";
 
+
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                SqlCommand command = new SqlCommand(queryString, connection);
+
+                command.Parameters.Add("@Name", System.Data.SqlDbType.VarChar, 50).Value = company.Name;
+
+                try
+                {
+                    connection.Open();
+                    SqlDataReader reader = command.ExecuteReader();
+
+
+                    if (reader.HasRows)
+                    {
+                        success = false;
+                    }
+                    else
+                    {
+                        success = true;
+                    }
+
+
+
+                }
+                catch (Exception e)
+                {
+                    log.Error(e.Message);
+                    success = false;
+                }
+                connection.Close();
+                return success;
+            }
+
+        }
 
     }
 }

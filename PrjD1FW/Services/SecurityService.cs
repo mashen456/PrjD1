@@ -23,7 +23,10 @@ namespace PrjD1FW.Services
             return dbObject.RegisterUser(user);
         }
 
+        internal ReturnInfo RegisterCompany(company company)
+        {
 
-
+            return dbObject.RegisterCompany(company);
+        }
     }
 }

@@ -158,6 +158,7 @@
     <Compile Include="Services\AuthedUser.cs" />
     <Compile Include="Services\DatabaseAccessObject.cs" />
     <Compile Include="Services\logger.cs" />
+    <Compile Include="Services\ReturnInfo.cs" />
     <Compile Include="Services\SecurityService.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -212,8 +213,9 @@
     <Content Include="Views\Login\Login.cshtml" />
     <Content Include="Views\Register\Register.cshtml" />
     <Content Include="Views\Login\userPannel.cshtml" />
-    <Content Include="Views\Companies\Company.cshtml" />
     <Content Include="Views\Companies\RegisterCompany.cshtml" />
+    <Content Include="Views\Companies\EditCompany.cshtml" />
+    <Content Include="Views\Companies\DetailsCompany.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Views\error\" />

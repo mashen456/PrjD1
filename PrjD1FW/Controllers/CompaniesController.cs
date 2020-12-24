@@ -25,8 +25,7 @@ namespace PrjD1FW.Controllers
                 {
                     return RedirectToAction("notAuthenticated", "error");
                 }
-                company.Name = authedUser.Username;
-                ViewData["Username"] = authedUser.Username;
+                company.FK_creator = authedUser.id;
                 return View("RegisterCompany", company);
             }
             else
@@ -37,8 +36,27 @@ namespace PrjD1FW.Controllers
 
         public ActionResult Register(company company)
         {
-            ViewData["Message"] = "Registration Done!";
-            return View("RegisterCompany", company);
+            if (ModelState.IsValid)
+            {
+                SecurityService securityService = new SecurityService();
+                ReturnInfo registerCompany = securityService.RegisterCompany(company);
+
+                if (registerCompany.success)
+                {
+                    ViewData["Message"] = "success";
+                    return View("DetailsCompany", company);
+                }
+                else
+                {
+                    ViewData["Message"] = registerCompany.errorMessage;
+                }
+                return View("RegisterCompany", company);
+            }
+            else
+            {
+                ViewData["Message"] = "Registration Failed!";
+                return View("Register", company);
+            }
         }
 
     }
