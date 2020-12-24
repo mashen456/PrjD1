@@ -22,11 +22,11 @@ namespace PrjD1FW.Controllers
         {
 
                 SecurityService securityService = new SecurityService();
-                Boolean authState = securityService.Auth(user);
-                if (authState)
+                AuthedUser authState = securityService.Authenticate(user);
+                if (authState.auth_success)
                 {
-                    ViewData["Success"] = "Login Success";
-                    return RedirectToAction("Index", "Companies", new { id = "1" });
+                TempData["session"] = authState;
+                    return RedirectToAction("Index", "Companies");
                 }
 
                 ViewData["Error"] = "Username / Password combination not found!";

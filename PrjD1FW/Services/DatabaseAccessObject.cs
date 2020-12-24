@@ -7,6 +7,7 @@ using System.Linq;
 using System.Web;
 using CryptoHelper;
 
+
 //Data Source = (LocalDB)\MSSQLLocalDB; AttachDbFilename = C:\Users\hp - laptop\source\repos\Prj_D1\PrjD1\PrjD1FW\App_Data\DatenbankUser.mdf; Integrated Security = True
 
 namespace PrjD1FW.Services
@@ -16,11 +17,10 @@ namespace PrjD1FW.Services
         logger log = new logger();
         string connectionString = @"Data Source=tcp:danielprj1.database.windows.net,1433;Initial Catalog=userdb;User Id=danielWebApp@danielprj1;Password=E@c%%xP#TiE8";
 
-
-
-        internal bool AuthUser(user user)
+        internal AuthedUser AuthUser(user user)
         {
-            bool success = false;
+            AuthedUser authedUser = new AuthedUser();
+            authedUser.auth_success = false;
 
             string queryString = "SELECT * FROM [dbo].[users] WHERE username = @Username AND password = @Password";
 
@@ -34,6 +34,8 @@ namespace PrjD1FW.Services
 
                 command.Parameters.Add("@Username", System.Data.SqlDbType.VarChar, 50).Value = user.Username;
                 command.Parameters.Add("@Password", System.Data.SqlDbType.VarChar, 50).Value = user.Password;
+                authedUser.Username = user.Username;
+                authedUser.Password = user.Password;
 
                 try
                 {
@@ -41,9 +43,14 @@ namespace PrjD1FW.Services
                     SqlDataReader reader = command.ExecuteReader();
 
 
+
+
                     if (reader.HasRows)
                     {
-                        success = IterateLoginCount(user);
+                        reader.Read();
+                        authedUser.id = (int)reader["userId"];
+                        reader.Close();
+                        authedUser.auth_success = IterateLoginCount(user);
                     }
                     else
                     {
@@ -62,11 +69,8 @@ namespace PrjD1FW.Services
                 connection.Close();
             }
 
-            return success;
+            return authedUser;
         }
-
-
-
 
         internal bool RegisterUser(user user)
         {
@@ -102,8 +106,6 @@ namespace PrjD1FW.Services
             return success;
 
         }
-
-
 
         //Helper Functions
 
@@ -166,8 +168,6 @@ namespace PrjD1FW.Services
             }
         }
 
-
-
         // Hash a password
         public string HashPassword(string password)
         {
@@ -224,6 +224,10 @@ namespace PrjD1FW.Services
             }
 
         }
+
+
+
+
 
 
     }

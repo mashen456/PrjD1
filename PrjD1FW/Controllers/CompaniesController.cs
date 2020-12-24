@@ -11,52 +11,35 @@ namespace PrjD1FW.Controllers
     public class CompaniesController : Controller
     {
         // GET: Login
-        public ActionResult Index(string id)
+        public ActionResult Index()
         {
+
             company company = new company();
-            if (id == "2")
+
+            if (TempData["session"] != null)
             {
-                company.Name = "RRSAAAaasada";
+                AuthedUser authedUser = new AuthedUser();
+                authedUser = (AuthedUser)TempData["session"];
+
+                if (authedUser.auth_success == false)
+                {
+                    return RedirectToAction("notAuthenticated", "error");
+                }
+                company.Name = authedUser.Username;
+                ViewData["Username"] = authedUser.Username;
+                return View("RegisterCompany", company);
             }
             else
             {
-                company.Name = "nope";
+                return RedirectToAction("Index", "error");
             }
-
-            return View("RegisterCompany", company);
         }
 
-        public ActionResult Register(string id)
+        public ActionResult Register(company company)
         {
-            company company = new company();
-            if (id == "2")
-            {
-                company.Name = "RRSAAAaasada";
-            }
-            else
-            {
-                company.Name = "nope";
-            }
-
+            ViewData["Message"] = "Registration Done!";
             return View("RegisterCompany", company);
         }
 
-
-
-        //public ActionResult Login(user user)
-        //{
-
-        //    SecurityService securityService = new SecurityService();
-        //    Boolean authState = securityService.Auth(user);
-        //    if (authState)
-        //    {
-        //        ViewData["Success"] = "Login Success";
-        //        return View("userPannel", user);
-        //    }
-
-        //    ViewData["Error"] = "Username / Password combination not found!";
-
-        //    return View("login", user);
-        //}
     }
 }

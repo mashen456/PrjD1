@@ -10,13 +10,20 @@ namespace PrjD1FW.Services
     {
         DatabaseAccessObject dbObject = new DatabaseAccessObject();
 
-        public bool Auth(user user)
+
+
+
+        public AuthedUser Authenticate(user user)
         {
             return dbObject.AuthUser(user);
+
         }
         public bool RegisterUser(user user)
         {
             return dbObject.RegisterUser(user);
         }
+
+
+
     }
 }
