@@ -6,6 +6,7 @@ using System.IO;
 using System.Linq;
 using System.Web;
 using CryptoHelper;
+using System.Web.Mvc;
 
 
 //Data Source = (LocalDB)\MSSQLLocalDB; AttachDbFilename = C:\Users\hp - laptop\source\repos\Prj_D1\PrjD1\PrjD1FW\App_Data\DatenbankUser.mdf; Integrated Security = True
@@ -16,6 +17,63 @@ namespace PrjD1FW.Services
     {
         logger log = new logger();
         string connectionString = @"Data Source=tcp:danielprj1.database.windows.net,1433;Initial Catalog=userdb;User Id=danielWebApp@danielprj1;Password=E@c%%xP#TiE8";
+
+
+
+        internal List<SelectListItem> ReturnAllCompanies()
+        {
+
+            List<SelectListItem> items = new List<SelectListItem>();
+
+
+            string queryString = "SELECT * FROM [dbo].[company]";
+
+
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                SqlCommand command = new SqlCommand(queryString, connection);
+
+
+                try
+                {
+                    connection.Open();
+                    SqlDataReader reader = command.ExecuteReader();
+
+                    while (reader.Read())
+                    {
+                        
+                        items.Add(new SelectListItem { Text = (string)reader["Name"], Value = reader["Id_company"].ToString() });
+                    }
+
+                    reader.Close();
+
+                }
+                catch (Exception e)
+                {
+                    log.Error(e.Message);
+
+                }
+                connection.Close();
+                return items;
+            }
+
+
+
+
+
+
+            items.Add(new SelectListItem { Text = "Action", Value = "0" });
+
+            items.Add(new SelectListItem { Text = "Drama", Value = "1" });
+
+            items.Add(new SelectListItem { Text = "Comedy", Value = "2", Selected = true });
+
+            items.Add(new SelectListItem { Text = "Science Fiction", Value = "3" });
+
+ 
+            return items;
+        }
+
 
         internal ReturnInfo RegisterCompany(company company)
         {

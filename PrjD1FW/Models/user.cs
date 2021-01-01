@@ -5,6 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Web;
 
+
 namespace PrjD1FW.Models
 {
     public class user
@@ -27,5 +28,9 @@ namespace PrjD1FW.Models
         [Compare("Password", ErrorMessage = "Das Kennwort entspricht nicht dem Bestätigungskennwort.")]
         [Required(ErrorMessage = "Confirm Password required")]
         public string ConfirmPassword { get; set; }
+
+
+
     }
+
 }

@@ -14,6 +14,8 @@ namespace PrjD1FW.Controllers
         // GET: Register
         public ActionResult Index()
         {
+            //SecurityService securityService = new SecurityService();
+            //ViewBag.CompanySelection = securityService.ReturnAllCompanies();
             return View("Register");
         }
 
@@ -27,7 +29,9 @@ namespace PrjD1FW.Controllers
                 Boolean authState = securityService.RegisterUser(user);
                 if (authState)
                 {
-                    return RedirectToAction("Index", "Login");
+                    ViewBag.Username = user.Username;
+                    ViewBag.CompanySelection = securityService.ReturnAllCompanies();
+                    return View("ChooseCompany");
                 }
                 else
                 {
@@ -37,5 +41,18 @@ namespace PrjD1FW.Controllers
             }
             return View("Register",user);
         }
+        public ViewResult CompanyChosen(string CompanySelection, string Username)
+        {
+            string username = Username;
+            string companySelection = CompanySelection;
+            //go to member space
+            ViewData["Error"] = "Erfolg!!";
+            return View("Register");
+
+        }
+
     }
+
+
+
 }

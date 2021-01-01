@@ -216,6 +216,8 @@
     <Content Include="Views\Companies\RegisterCompany.cshtml" />
     <Content Include="Views\Companies\EditCompany.cshtml" />
     <Content Include="Views\Companies\DetailsCompany.cshtml" />
+    <Content Include="Views\Companies\ListCompanies.cshtml" />
+    <Content Include="Views\Register\ChooseCompany.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Views\error\" />

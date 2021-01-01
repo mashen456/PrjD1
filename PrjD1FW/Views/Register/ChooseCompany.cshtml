@@ -1,0 +1,25 @@
+﻿
+@{
+    ViewBag.Title = "CompanySelection";
+}
+
+<h2>ChooseCompany</h2>
+
+@using (Html.BeginForm("CompanyChosen", "Register", FormMethod.Get))
+{
+
+<fieldset>
+
+    Movie Type
+    @Html.ViewBag.Username
+    @Html.DropDownList("CompanySelection")
+
+    <p>
+
+        <input type="submit" value="Submit" />
+
+    </p>
+
+</fieldset>
+
+}

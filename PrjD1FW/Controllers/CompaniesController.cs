@@ -59,5 +59,18 @@ namespace PrjD1FW.Controllers
             }
         }
 
+        public ActionResult ListCompanies()
+        {
+            var companies = new List<company>()
+            {
+                new company(){ city = "132312321123", fax = "132312321123", FK_creator = 1, Name = "132312321123", RegistrationDate = DateTime.Now, Street = "132312321123", tele = "1132213", zip ="123123"},
+                new company(){ city = "132312321123", fax = "132312321123", FK_creator = 1, Name = "132312321123", RegistrationDate = DateTime.Now, Street = "132312321123", tele = "1132213", zip ="123123"},
+                new company(){ city = "132312321123", fax = "132312321123", FK_creator = 1, Name = "132312321123", RegistrationDate = DateTime.Now, Street = "132312321123", tele = "1132213", zip ="123123"},
+                new company(){ city = "132312321123", fax = "132312321123", FK_creator = 1, Name = "132312321123", RegistrationDate = DateTime.Now, Street = "132312321123", tele = "1132213", zip ="123123"},
+
+            };
+
+            return View("ListCompanies",companies);
+        }
     }
 }
